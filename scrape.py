@@ -517,7 +517,7 @@ def scrapeDept():
     dept = []
     i = 0
 
-    db.open_connection("../../config")
+    db.open_connection()
 
     dept_li = query("a[href *= '/Academics/Course-Descriptions/Course-Details?SA=']")
 

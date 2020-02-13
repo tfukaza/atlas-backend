@@ -2,11 +2,29 @@ import scrape
 import evalReq
 import parser
 import db
+import sys
 
 def main():
-   
-    #scrape.reset()
 
+    arg = sys.argv[1]
+
+    if arg == "get-course-list":
+        db.open_connection()
+        print(db.get_db("SELECT * FROM departments"))
+        db.close_connection()
+        scrape.scrapeCourses()
+
+    elif arg == "get-lecture-list":
+        scrape.scrapeLectureList("20S")
+    
+    elif arg == "get-lecture-info":
+        scrape.updateLecture()
+
+    elif arg == "get-all":
+        scrape.scrapeCourses()
+        scrape.scrapeLectureList("20S")
+        scrape.updateLecture()
+    
     #initialize the database
     #db.open_connection("../../config")
     #db.delete_db()
@@ -15,11 +33,8 @@ def main():
 
     #scrape.scrapeCourses()
 
-    #scrape.scrapeLectureList("20W")
-    #scrape.scrapeLectureList("20S")
-    #scrape.scrapeLectureList("20F")
-    
-    #scrape.updateLecture()
+  
+   
     #scrape.buildDict()
     #print(evalReq.chkCOMSCI(['COM+SCI 1','COM+SCI 31','COM+SCI 32','COM+SCI 33','COM+SCI 35L', 'COM+SCI M51A', 'MATH 32A']))
     
@@ -28,11 +43,11 @@ def main():
     
     
     #test="two courses in FieldI, or course 20 and one course in FieldI"
-    parser.build_mapping()
+    #parser.build_mapping()
 
     #print(parser.mapping)
 
-    test=[]
+    # test=[]
     
     #test.append("COM+SCI 100")
     #test.append("COM+SCI 100 or COM+SCI 200")
@@ -47,7 +62,7 @@ def main():
     #test.append("courses 120A, 120B, 120C, or one year of introductory Middle Egyptian")
     #test.append("course 10 or 10W or 20 or comparable knowledge in Asian American studies")
     #test.append("three courses from COM+SCI 111 through COM+SCI CM187")
-    test.append("two courses from 10 (or 10W), 20, and 30 (or 30W) and one course from 104A through M108, 187A, or 191A")
+    #test.append("two courses from 10 (or 10W), 20, and 30 (or 30W) and one course from 104A through M108, 187A, or 191A")
     #test.append("Mathematics 3B or 32A, Physics 1B or 5B or 5C or 6B, with grades of C or better")
     #test.append("course 32 or Program in Computing 10C with grade of C- or better, and one course from Biostatistics 100A, Civil Engineering 110, Electrical Engineering 131A, Mathematics 170A, or Statistics 100A")
     #test.append("one course from 31, Civil Engineering M20, Mechanical and Aerospace Engineering M20, or Program in Computing 10A, and Mathematics 3B or 31B")
@@ -59,14 +74,14 @@ def main():
     #test.append("course 181 or compatible background")
    
     #print(scrape.dept_dict)
-
+    """
     for i in test:
         print(i)
         s = parser.parseReq(i, "COM+SCI")
         print(i)
         print(s)
         print("--------------------")
-    
+    """
 
 
 

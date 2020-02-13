@@ -3,6 +3,8 @@ import json
 import parser 
 import tool
 import re 
+import yaml
+
 class Agent:
     def __init__(self, name):
         self.req = []         # list of required courses/agents
@@ -107,19 +109,21 @@ def parse():
 
     parser.build_mapping()
 
-    with open("../frontend/majors/comsci.rq","r") as file:
+    with open("../atlas-frontend/majors/comsci.yml","r") as file:
 
-        req = file.readlines()
+        #req = file.readlines()
+        req = yaml.safe_load(file)
+        #result = parse_req(req, 0, "expression", "")
+        #print(req)
+        result = parse_req_yml(req["master"], "")
+        #print(result[4])
+        #rec_print(result[0])
+        #grp_print(result[1])
 
-        result = parse_req(req, 0, "expression", "")
-
-        rec_print(result[0])
-        grp_print(result[1])
-
-        with open("../frontend/majors/comsci.js","w") as output:
+        with open("../atlas-frontend/majors/comsci.js","w") as output:
             parse_write(output, result)
         
-        with open("../frontend/majors/comsci.html","w") as output:
+        with open("../atlas-frontend/majors/comsci.html","w") as output:
             output.write(""" 
                 <!DOCTYPE html>
                 <html>
@@ -216,7 +220,7 @@ def parse_req(req, l, state, req_name):
                 
                 name = trim_nonalpha(line)
 
-                if name[0:5] == "%anon":
+                if name[0:5] == "$anon":
                     name = name.split("?")
                     if len(name) > 1:
                         req_name = req_name + "." + name[1]
@@ -246,7 +250,7 @@ def parse_req(req, l, state, req_name):
                 name = trim_nonalpha(line)
 
                 
-                if name[0:5] == "%anon":
+                if name[0:5] == "$anon":
                     name = name.split("?")
                     if len(name) > 1:
                         name = req_name + "." + name[1]
@@ -278,7 +282,7 @@ def parse_req(req, l, state, req_name):
                 
                 name = trim_nonalpha(line)
 
-                if name[0:5] == "%anon":
+                if name[0:5] == "$anon":
                     name = name.split("?")
                     if len(name) > 1:
                         req_name = req_name + "." + name[1]
@@ -346,7 +350,7 @@ def parse_req(req, l, state, req_name):
                     line = line[1:]
     
                 
-                html+="<p>" + line + "</p>" 
+                html+="<p>" + str(line) + "</p>" 
 
                 req_list = []
                 #if the courses are already parsed
@@ -466,7 +470,7 @@ def parse_req(req, l, state, req_name):
                 while line[0] == " " or line[0] == "\t":
                     line = line[1:]
 
-                html+="<p>" + line + "</p>"
+                html+="<p>" + str(line) + "</p>"
 
                 req_list = []
                 #if the courses are already parsed
@@ -552,15 +556,257 @@ def parse_req(req, l, state, req_name):
         
     return [agent_buffer, root_buffer, rule_buffer, l, html]
 
-    """
 
-    for r in req_buffer:
-        print(r.name)
-        print(r.req)
-        print(r.chk)
-        print(r.upd)
-        print("---")
-    """
+# Takes a *LIST* of items, and builds the HTML and Js executable. 
+
+def parse_req_yml(req, req_name):
+
+    html=""
+
+    root_buffer = []
+    agent_buffer = []
+    rule_buffer = []
+    #group = []
+    l = 0
+    
+    for item in req:
+        
+        #GROUP
+        if "GROUP" in item:
+            
+            name = item["GROUP"]
+            
+            if name[0:5] == "$anon":
+                name = name.split("?")
+                if len(name) > 1:
+                    name = req_name + "." + name[1]
+                else:
+                    name = req_name
+                
+            else:
+                name = name
+
+            html+="<div class=\"group " + name + "\">" 
+            html+="<h3>" + name + "</h3>" 
+            # Add another option 
+            # By syntax this must be an instance of OptAgent 
+            root_buffer.append(RootAgent(name))
+            root_buffer[-1].upd = item["upd"]
+
+            #recursive
+            rec_result = parse_req_yml(item["content"], name)
+            agent_buffer = agent_buffer + rec_result[0].copy()
+
+            for a in rec_result[0]:
+                root_buffer[-1].ref.append(a.name)
+            
+            root_buffer = rec_result[1].copy() + root_buffer
+            rule_buffer = rule_buffer + rec_result[2].copy()
+
+            html+=rec_result[4]                
+            html+="</div>"
+        
+        #REQ
+        elif "REQ" in item:
+            
+            name = item["REQ"]
+            if name[0:5] == "$anon":
+                name = name.split("?")
+                if len(name) > 1:
+                    name = req_name + "." + name[1]
+                else:
+                    name = req_name
+                
+            else:
+                name = name
+
+            html+="<div class=\"req " + name + "\">" 
+            html+="<h3>" + name + "</h3>" 
+            
+            #If there is already a group in the buffer, add this req to its reference list 
+            #if len(root_buffer) > 0 and root_buffer[-1].isClosed == False:
+            #    root_buffer[-1].ref.append(name)
+            
+            #add this to buffer
+            agent_buffer.append(Agent(name))
+
+            #state = "req"
+            #course param
+            line = item["course"] 
+            #print(line)
+            
+            html+="<p>" + str(line) + "</p>" 
+
+            req_list = []
+            #if the courses are already parsed
+            if isinstance(line, list):
+                #convert it to an object 
+                req_list = line
+            elif line[0] == "%":
+                req_list = [line]
+            #otherwise, parse the list
+            else:
+                req_list = parser.parseReq(line)
+
+
+            #process req list
+            req_list = tool.simplifyReq(req_list)
+
+            agent_buffer[-1].req = req_list
+            
+            
+            
+            agent_buffer[-1].chk = item["chk"]
+                
+            agent_buffer[-1].upd = item["upd"]
+                
+            html+="</div>" 
+                
+            # check if there is a rule
+            # These will be rules binded to agents
+            if "rules" in item:
+
+                #check each rule
+                for rule in item["rules"]:
+
+                    #check each key/value pair
+                    for param in rule: 
+
+                        name = rule["RULE"]
+                        print("RULE" + name)
+
+                        if param == "RULE":
+                            agent_buffer[-1].rules.append(RuleAgent(name))
+                            html+="<div class=\"rule " + name + "\">" 
+                            html+="<p>" + name + "</p>" 
+                        
+                        elif param == "course" or param == "A" or param == "B":
+                            #Rules almost always refer to course. Find them out. 
+                            #Obtain the value of the keys
+                            line = rule[param]
+                            req_list = []
+                            if isinstance(line, list):
+                                #convert it to an object 
+                                req_list = line
+                            elif line[0] == "$":
+                                req_list = [line]
+
+                            agent_buffer[-1].rules[-1].ref.append(req_list)
+            
+                    html+="</div>" 
+        
+            
+
+        #OPT
+        elif "OPT" in item:
+            
+            name = item["OPT"]
+
+            if name[0:5] == "$anon":
+                name = name.split("?")
+                if len(name) > 1:
+                    name = req_name + "." + name[1]
+                else:
+                    name = req_name
+                
+            else:
+                name = name
+
+            html+="<div class=\"opt " + name + "\">" 
+            html+="<h3>" + name + "</h3>" 
+            
+
+            #If there is already a group in the buffer, add this req to its reference list 
+            #if len(root_buffer) > 0 and root_buffer[-1].isClosed == False:
+            #    root_buffer[-1].ref.append(req_name)
+            
+            #add this to buffer
+            agent_buffer.append(OptAgent(name))
+
+            #option
+
+            for o in item["options"]: 
+                o_name = o["option"]
+                
+                html+="<div class=\"option " + o_name + "\">"
+            
+                agent_buffer[-1].options.append([o_name, [], [], [] ])
+                
+                #recursively parse all agents and rules in this option
+                rec_result = parse_req_yml(o["content"], name)
+                #record the result to the option
+                agent_buffer[-1].options[-1][1] = rec_result[0].copy()
+                agent_buffer[-1].options[-1][2] = rec_result[1].copy()
+                agent_buffer[-1].options[-1][3] = rec_result[2].copy()
+                
+                html+=rec_result[4]
+                html+="</div>"
+            
+
+        
+            #create dropdown memnu
+            html+="<select onChange=\"select_opt(this, this.value)\" class=\"sel\">"
+            for o in agent_buffer[-1].options:
+                html+="<option value=\"" + o[0] + "\">" + o[0] + "</option>"
+            html+="</select>"
+            html+="</div>"
+            
+
+        # RULE
+        # Rules not in REQ must be global
+        elif "RULE" in item:
+            
+            name = item["RULE"]
+            
+            #rules in <expression> mst be global
+            #add the rule to the rule list
+            rule_buffer.append(RuleAgent(name))
+
+            html+="<div class=\"rule " + name + "\">" 
+            
+            #state="rule-global"
+            #l = l + 1
+            #check each key/value pair
+            for param in item: 
+                
+                if param == "course" or param == "A" or param == "B":
+                    #Rules almost always refer to course. Find them out. 
+                    #Obtain the value of the keys
+                    line = item[param]
+                    req_list = []
+                    if isinstance(line, list):
+                        #convert it to an object 
+                        req_list = line
+                    elif line[0] == "$":
+                        req_list = [line]
+
+                    rule_buffer[-1].ref = req_list
+    
+            html+="</div>" 
+        
+    return [agent_buffer, root_buffer, rule_buffer, l, html]
+
+
+def parse_write(output, result):
+
+    output.write(
+        """function audit_build(option){
+//agents
+agents= [];
+//root agents
+root_agents= [];
+//rules
+rules = [];
+//global list of completed courses 
+taken = []
+
+    let a_len = 0; 
+    \n\n"""
+    )
+
+    parse_write_rec(output, result, "\t")
+
+    output.write("}")
 
 def parse_write(output, result):
 
@@ -633,6 +879,8 @@ def parse_write_rec(output, result, depth):
                     func = "not_used_for_other"
                 elif rule_name == "SUBSET_RESTRICTION":
                     func = "subset_restriction"
+                elif rule_name == "A_NOT_APPROVED_IF_B":
+                    func = "a_not_if_b"
                 else:
                     raise Exception("unknown rule " + rule_name) 
 
@@ -695,7 +943,7 @@ def parse_write_rec(output, result, depth):
         #a[a.length-1].chk = check_req.bind(a[a.length-1]);
         #a[a.length-1].upd = update_leaf_1.bind(a[a.length-1], 6, -1);
 
-def pase_write_fast():
+#def pase_write_fast():
        
 
 

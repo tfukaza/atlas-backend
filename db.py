@@ -7,14 +7,10 @@
 
 import psycopg2
 import json
+import config
 
 #Constants used to run the database
-f = None
-usr = ""
-passwd = ""
-host = ""
-port = ""
-database = ""
+#f = None
 
 connection = None
 cursor = None
@@ -113,19 +109,19 @@ def open_connection(path="config"):
     global cursor 
 
     #print("Opening config file")
-    f = open(path,"r")
+    # f = open(path,"r")
 
-    usr = f.readline()
-    passwd = f.readline()
-    host = f.readline()
-    port = f.readline()
-    database = f.readline()
+    usr = config.usr
+    passwd = config.passwd
+    host = config.host
+    port = config.port
+    database = config.database
 
-    #make sure to remove the newlines
-    usr = usr[:-1]
-    passwd = passwd[:-1]
-    host = host[:-1]
-    port = port[:-1]
+    # make sure to remove the newlines
+    # usr = usr[:-1]
+    # passwd = passwd[:-1]
+    # host = host[:-1]
+    # port = port[:-1]
 
     print("Establishing connection with database")
     connection = psycopg2.connect(  user = usr,
@@ -134,6 +130,7 @@ def open_connection(path="config"):
                                     port = port,
                                     database = database)
     cursor = connection.cursor()
+    #connection = psycopg2.connect("postgresql://postgre:@atlas_postgres_1:5432/postgres")
 
     #cursor.execute("SELECT version();")
     #record = cursor.fetchone()
@@ -145,7 +142,7 @@ def open_connection(path="config"):
 
 def close_connection():
  
-    if(connection):
+    if connection:
         cursor.close()
         connection.close()
     else:
