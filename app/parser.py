@@ -10,7 +10,7 @@ mapping = []
 
 def build_mapping():
 
-    db.open_connection("../../config")
+    db.open_connection()
 
     global mapping 
     mapping = []
@@ -23,8 +23,9 @@ def build_mapping():
         mapping.append((db.trim(m[0]), db.trim(m[1])))
 
 
-# Tokenizer
-
+# Tokenizer 
+# Takes a string expressing course/major requirements in plain English
+# and returns a tokenized list  
 def tokenizeReq(string):
 
     
@@ -96,10 +97,6 @@ def pop_stack(stack, tokens, state):
     stack[0][1] = tokens
     stack[0][2] = [1, -1]
 
-#def get_precedence(token):
-
-#    if token == ''
-
 def parseReq(html, major=""):
 
     tok = tokenizeReq(html)
@@ -131,19 +128,16 @@ def parseReq(html, major=""):
         rule = stack[0][2]
         size  = len(tokens)
        
-        if False:
-            print(state)
-            print(cur)
-            print(tokens)
-            print(rule)
-            print(eq)
-            print(prec)
-            print("-------------")
+        # Uncomment this to show debugging info
 
-        #if there are no tokens, it means the entire string was parsed
-        #if len(tokens) == 0:
-        #    state = "expression"
-        #    rule[0] = 1
+        # if False:
+        #     print(state)
+        #     print(cur)
+        #     print(tokens)
+        #     print(rule)
+        #     print(eq)
+        #     print(prec)
+        #     print("-------------")
 
         if size == 0 and len(prec) <= 1:
             if cur != "":
@@ -158,38 +152,38 @@ def parseReq(html, major=""):
                 result.insert(0, "%and") 
             print(result)
             break
-            """
-            if cur != "":
-                eq[-1].append(cur)   
-                print("final append")
-                print(eq)
-                cur=""
+           
+            # if cur != "":
+            #     eq[-1].append(cur)   
+            #     print("final append")
+            #     print(eq)
+            #     cur=""
            
                                  
           
-            #append any remaining elements
-            while len(eq) > 1:
-                tmp = eq[-1]
-                eq.pop(-1)
-                #if tmp has elements
-                if len(tmp) > 0:
-                    #trim off excess sublists, e.g. [[[a]]] -> [a]
-                    while len(tmp) == 1 and not isinstance(tmp, str):
-                        tmp = tmp[0]
-                    #append
-                    if isinstance(tmp, list):
-                        eq[-1].append(tmp.copy())
-                    else:
-                        eq[-1].append(tmp)
+            # #append any remaining elements
+            # while len(eq) > 1:
+            #     tmp = eq[-1]
+            #     eq.pop(-1)
+            #     #if tmp has elements
+            #     if len(tmp) > 0:
+            #         #trim off excess sublists, e.g. [[[a]]] -> [a]
+            #         while len(tmp) == 1 and not isinstance(tmp, str):
+            #             tmp = tmp[0]
+            #         #append
+            #         if isinstance(tmp, list):
+            #             eq[-1].append(tmp.copy())
+            #         else:
+            #             eq[-1].append(tmp)
             
-            #trim excess sublists
-            while len(eq) == 1 and not isinstance(eq, str):
-                eq = eq[0]
+            # #trim excess sublists
+            # while len(eq) == 1 and not isinstance(eq, str):
+            #     eq = eq[0]
 
-            #exit loop
-            result = eq    
-            break
-            """
+            # #exit loop
+            # result = eq    
+            # break
+            
 
 
         #<expression>
@@ -205,159 +199,159 @@ def parseReq(html, major=""):
                 # !!!and assume there is another subexpression following the token
                 # !!!, and [expression]
                 # 
-                """
-                if size > 1 and tokens[0] == ',' and tokens[1] == 'and':
+                # """
+                # if size > 1 and tokens[0] == ',' and tokens[1] == 'and':
                   
-                    #append any remaining elements
-                    while len(eq) > 1:
-                        tmp = eq[-1]
-                        eq.pop(-1)
-                        if len(tmp) > 0:
-                            eq[-1].append(tmp.copy())
+                #     #append any remaining elements
+                #     while len(eq) > 1:
+                #         tmp = eq[-1]
+                #         eq.pop(-1)
+                #         if len(tmp) > 0:
+                #             eq[-1].append(tmp.copy())
                     
-                    #clean up embedded lists
-                    tmp = eq
-                    while len(tmp) == 1 and not isinstance(tmp, str):
-                        tmp = tmp[0]
+                #     #clean up embedded lists
+                #     tmp = eq
+                #     while len(tmp) == 1 and not isinstance(tmp, str):
+                #         tmp = tmp[0]
 
-                    # Add AND, and create a new eq list for the following subexpression
-                    # This will be appended to the AND expression after the parser ends 
-                    #if tmp is a list, make sure to use copy() if tmp is a list
-                    if isinstance(tmp, list):
-                        eq = [["%and", tmp.copy()],[]]
-                    else:
-                        eq = [["%and", tmp],[]]
+                #     # Add AND, and create a new eq list for the following subexpression
+                #     # This will be appended to the AND expression after the parser ends 
+                #     #if tmp is a list, make sure to use copy() if tmp is a list
+                #     if isinstance(tmp, list):
+                #         eq = [["%and", tmp.copy()],[]]
+                #     else:
+                #         eq = [["%and", tmp],[]]
                    
 
-                    stack.insert(0, ["expression", tokens[2:], [-1, -1]])         
-                    continue
+                #     stack.insert(0, ["expression", tokens[2:], [-1, -1]])         
+                #     continue
                 
-                # ,or <expression>
-                elif size > 1 and tokens[0] == ',' and tokens[1] == 'or':
+                # # ,or <expression>
+                # elif size > 1 and tokens[0] == ',' and tokens[1] == 'or':
                     
-                    #append any remaining elements
-                    while len(eq) > 1:
-                        tmp = eq[-1]
-                        eq.pop(-1)
-                        if len(tmp) > 0:
-                            eq[-1].append(tmp.copy())
+                #     #append any remaining elements
+                #     while len(eq) > 1:
+                #         tmp = eq[-1]
+                #         eq.pop(-1)
+                #         if len(tmp) > 0:
+                #             eq[-1].append(tmp.copy())
                     
-                    #clean up embedded lists
-                    tmp = eq
-                    while len(tmp) == 1 and not isinstance(tmp, str):
-                        tmp = tmp[0]
+                #     #clean up embedded lists
+                #     tmp = eq
+                #     while len(tmp) == 1 and not isinstance(tmp, str):
+                #         tmp = tmp[0]
 
-                    #add OR
-                    #if tmp is a list, make sure to use copy() if tmp is a list
-                    if isinstance(tmp, list):
-                        eq = [["%or?one", tmp.copy()],[]]
-                    else:
-                        eq = [["%or?one", tmp],[]]
+                #     #add OR
+                #     #if tmp is a list, make sure to use copy() if tmp is a list
+                #     if isinstance(tmp, list):
+                #         eq = [["%or?one", tmp.copy()],[]]
+                #     else:
+                #         eq = [["%or?one", tmp],[]]
                     
                    
-                    stack.insert(0, ["expression", tokens[2:], [-1, -1]])         
-                    continue
+                #     stack.insert(0, ["expression", tokens[2:], [-1, -1]])         
+                #     continue
                    
-                #TODO
-                elif size > 1 and tokens[0] == ',' and tokens[1] == "with":
-                    stack[0][1]= tokens[7:]
-                    continue
+                # #TODO
+                # elif size > 1 and tokens[0] == ',' and tokens[1] == "with":
+                #     stack[0][1]= tokens[7:]
+                #     continue
 
-                # , <expression>
-                elif size > 1 and tokens[0] == ',':
+                # # , <expression>
+                # elif size > 1 and tokens[0] == ',':
                     
-                    #append any remaining elements
-                    while len(eq) > 1:
-                        tmp = eq[-1]
-                        eq.pop(-1)
-                        if len(tmp) > 0:
-                            eq[-1].append(tmp.copy())
+                #     #append any remaining elements
+                #     while len(eq) > 1:
+                #         tmp = eq[-1]
+                #         eq.pop(-1)
+                #         if len(tmp) > 0:
+                #             eq[-1].append(tmp.copy())
                     
-                    #check the most recent eq class
-                    chk = eq[-1][0]
+                #     #check the most recent eq class
+                #     chk = eq[-1][0]
 
-                    #',' has a higher precedence than "or" (but not ",or"), so if the last eq class is an "or"
-                    # we must treat , as a strong conjuntion 
-                    if isinstance(chk, str) and chk.find("%or") != -1:
+                #     #',' has a higher precedence than "or" (but not ",or"), so if the last eq class is an "or"
+                #     # we must treat , as a strong conjuntion 
+                #     if isinstance(chk, str) and chk.find("%or") != -1:
                     
-                        #clean up embedded lists
-                        tmp = eq
-                        while len(tmp) == 1 and not isinstance(tmp, str):
-                            tmp = tmp[0]
+                #         #clean up embedded lists
+                #         tmp = eq
+                #         while len(tmp) == 1 and not isinstance(tmp, str):
+                #             tmp = tmp[0]
 
-                        #add AND
-                        #if tmp is a list, make sure to use copy() if tmp is a list
-                        if isinstance(tmp, list):
-                            eq = [["%and", tmp.copy()],[]]
-                        else:
-                            eq = [["%and", tmp],[]]
+                #         #add AND
+                #         #if tmp is a list, make sure to use copy() if tmp is a list
+                #         if isinstance(tmp, list):
+                #             eq = [["%and", tmp.copy()],[]]
+                #         else:
+                #             eq = [["%and", tmp],[]]
                     
-                        stack.insert(0, ["expression", tokens[1:], [-1, -1]])         
-                        continue
-                    #otherwise, treat ',' as a weak conjunction, i.e. same as "and"
-                    else:
-                        #if this is already a list of AND, simply append 
-                        if len(eq) > 0 and len(eq[-1]) > 0 and eq[-1][0] == "%and":
-                            if cur != "":
-                                eq[-1].append(cur)   
-                        #if this is a new list of AND, create the neccesary subexpression
-                        else:
-                            #pop the last expression
-                            tmp = eq[-1]
-                            eq.pop(-1)
+                #         stack.insert(0, ["expression", tokens[1:], [-1, -1]])         
+                #         continue
+                #     #otherwise, treat ',' as a weak conjunction, i.e. same as "and"
+                #     else:
+                #         #if this is already a list of AND, simply append 
+                #         if len(eq) > 0 and len(eq[-1]) > 0 and eq[-1][0] == "%and":
+                #             if cur != "":
+                #                 eq[-1].append(cur)   
+                #         #if this is a new list of AND, create the neccesary subexpression
+                #         else:
+                #             #pop the last expression
+                #             tmp = eq[-1]
+                #             eq.pop(-1)
 
-                            #clean up embedded list
-                            while len(tmp) == 1 and not isinstance(tmp, str):
-                                tmp = tmp[0]
+                #             #clean up embedded list
+                #             while len(tmp) == 1 and not isinstance(tmp, str):
+                #                 tmp = tmp[0]
 
-                            #if tmp is a list, make sure to use copy() if tmp is a list
-                            if isinstance(tmp, list):
-                                eq.append(["%and", tmp.copy()]) 
-                            else:
-                                eq.append(["%and", tmp]) 
+                #             #if tmp is a list, make sure to use copy() if tmp is a list
+                #             if isinstance(tmp, list):
+                #                 eq.append(["%and", tmp.copy()]) 
+                #             else:
+                #                 eq.append(["%and", tmp]) 
                             
-                            cur = ""
+                #             cur = ""
                     
-                        stack.insert(0, ["expression", tokens[1:], [-1, -1]])         
-                        continue
+                #         stack.insert(0, ["expression", tokens[1:], [-1, -1]])         
+                #         continue
              
 
-                # 'and' is a weak conjunction, meaning it may be part of a subexpression
-                # Thus we cannot terminate preceding expressions
-                # Instead, we simply create another subexpression and append it to the most recent expression
-                elif tokens[0] == 'and':
+                # # 'and' is a weak conjunction, meaning it may be part of a subexpression
+                # # Thus we cannot terminate preceding expressions
+                # # Instead, we simply create another subexpression and append it to the most recent expression
+                # elif tokens[0] == 'and':
                   
-                    #if this is already a list of AND, simply append 
-                    if len(eq) > 0 and eq[-1][0] == "%and":
-                        if cur != "":
-                            eq[-1].append(cur)   
-                    #if this is a new list of AND, create the neccesary subexpression
-                    else:
-                        #pop the last expression
-                        tmp = eq[-1]
-                        eq.pop(-1)
+                #     #if this is already a list of AND, simply append 
+                #     if len(eq) > 0 and eq[-1][0] == "%and":
+                #         if cur != "":
+                #             eq[-1].append(cur)   
+                #     #if this is a new list of AND, create the neccesary subexpression
+                #     else:
+                #         #pop the last expression
+                #         tmp = eq[-1]
+                #         eq.pop(-1)
 
-                        #clean up embedded list
-                        while len(tmp) == 1 and not isinstance(tmp, str):
-                            tmp = tmp[0]
+                #         #clean up embedded list
+                #         while len(tmp) == 1 and not isinstance(tmp, str):
+                #             tmp = tmp[0]
 
-                        #if tmp is a list, make sure to use copy() if tmp is a list
-                        if isinstance(tmp, list):
-                            eq.append(["%and", tmp.copy()]) 
-                        else:
-                            eq.append(["%and", tmp]) 
+                #         #if tmp is a list, make sure to use copy() if tmp is a list
+                #         if isinstance(tmp, list):
+                #             eq.append(["%and", tmp.copy()]) 
+                #         else:
+                #             eq.append(["%and", tmp]) 
                         
-                        cur = ""
+                #         cur = ""
                    
-                    stack.insert(0, ["expression", tokens[1:], [-1, -1]])         
-                    continue
+                #     stack.insert(0, ["expression", tokens[1:], [-1, -1]])         
+                #     continue
                 
                 
-                #if all cases don't match, it is an error
-                else:
-                    print("syntax error")
-                    return[]
-                """
+                # #if all cases don't match, it is an error
+                # else:
+                #     print("syntax error")
+                #     return[]
+                # """
                 p_level = 0
                 conjunction = None 
 
@@ -426,9 +420,6 @@ def parseReq(html, major=""):
                             eq.append(["%and", tmp.copy()]) 
                         else:
                             eq.append(["%and", tmp]) 
-                        
-                       
-                    
 
                     # if it was an OR
                     elif conjunction == "%or":
@@ -452,7 +443,6 @@ def parseReq(html, major=""):
                     stack.insert(0, ["expression", tokens, [-1, -1]])         
                     continue
                           
-                
                 # if the previous expression has a lower precedence, we must consume the previous expression
                 # e.g. A or B ,and C
                 # up until B we have %or A B. since ,and > or, we must do %and [%or A B] C
@@ -575,96 +565,96 @@ def parseReq(html, major=""):
                     cur = ""    
                     pop_stack(stack, tokens, [1, -1])
                     continue
-                """
-                #after <course>
-                elif rule[0] == 4:
+                # """
+                # #after <course>
+                # elif rule[0] == 4:
                    
-                    # or <eq_class>
-                    if tokens[0] == 'or':
-                        tokens = tokens[1:]
+                #     # or <eq_class>
+                #     if tokens[0] == 'or':
+                #         tokens = tokens[1:]
                         
-                            # If we are already in an OR expression, append
-                            if len(eq) > 0 and eq[-1][0].find("%or") != -1:
-                                if cur != "":
-                                    eq[-1].append(cur)
-                                cur=""
-                            # If this is a start of an OR expression, create the expression
-                            else:
-                                tmp = eq[-1]
-                                eq.pop(-1)
+                #             # If we are already in an OR expression, append
+                #             if len(eq) > 0 and eq[-1][0].find("%or") != -1:
+                #                 if cur != "":
+                #                     eq[-1].append(cur)
+                #                 cur=""
+                #             # If this is a start of an OR expression, create the expression
+                #             else:
+                #                 tmp = eq[-1]
+                #                 eq.pop(-1)
 
-                                #clean up embedded list
-                                while len(tmp) == 1 and not isinstance(tmp, str):
-                                    tmp = tmp[0]
+                #                 #clean up embedded list
+                #                 while len(tmp) == 1 and not isinstance(tmp, str):
+                #                     tmp = tmp[0]
 
-                                if isinstance(tmp, str):
-                                    eq.append(["%or?one", tmp]) 
-                                else:
-                                    eq.append(["%or?one", tmp.copy()]) 
-                                cur = ""
+                #                 if isinstance(tmp, str):
+                #                     eq.append(["%or?one", tmp]) 
+                #                 else:
+                #                     eq.append(["%or?one", tmp.copy()]) 
+                #                 cur = ""
 
-                            stack.insert(0, ["eq_class", tokens[1:], [-1, -1]])         
-                            continue
+                #             stack.insert(0, ["eq_class", tokens[1:], [-1, -1]])         
+                #             continue
                         
-                        if prec[0] < 5:
+                #         if prec[0] < 5:
 
-                            #pop the last expression
-                            tmp = eq[-1]
-                            eq.pop(-1)
+                #             #pop the last expression
+                #             tmp = eq[-1]
+                #             eq.pop(-1)
 
-                            #clean up embedded list
-                            while len(tmp) == 1 and not isinstance(tmp, str):
-                                tmp = tmp[0]
+                #             #clean up embedded list
+                #             while len(tmp) == 1 and not isinstance(tmp, str):
+                #                 tmp = tmp[0]
 
-                            #if tmp is a list, make sure to use copy() if tmp is a list
-                            if isinstance(tmp, list):
-                                eq = [["%or?one", tmp.copy()],[]]
-                            else:
-                                eq = [["%or?one", tmp],[]]
+                #             #if tmp is a list, make sure to use copy() if tmp is a list
+                #             if isinstance(tmp, list):
+                #                 eq = [["%or?one", tmp.copy()],[]]
+                #             else:
+                #                 eq = [["%or?one", tmp],[]]
                             
-                            prec.insert(0, 5)
-                            stack.insert(0, ["expression", tokens, [-1, -1]])         
-                            continue
+                #             prec.insert(0, 5)
+                #             stack.insert(0, ["expression", tokens, [-1, -1]])         
+                #             continue
 
-                        elif prec[0] > 5:
+                #         elif prec[0] > 5:
 
-                            tmp=eq[-1]
+                #             tmp=eq[-1]
 
-                            #append any remaining elements until we reach a precendent level that is greater or equal
-                            while len(eq) > 1 and prec[0]  5:
-                                tmp = eq[-1]
-                                eq.pop(-1)
-                                prec.pop(0)
-                                if len(tmp) > 0:
-                                    eq[-1].append(tmp.copy())
+                #             #append any remaining elements until we reach a precendent level that is greater or equal
+                #             while len(eq) > 1 and prec[0]  5:
+                #                 tmp = eq[-1]
+                #                 eq.pop(-1)
+                #                 prec.pop(0)
+                #                 if len(tmp) > 0:
+                #                     eq[-1].append(tmp.copy())
                             
-                            #clean up embedded list
-                            while len(tmp) == 1 and not isinstance(tmp, str):
-                                tmp = tmp[0]
+                #             #clean up embedded list
+                #             while len(tmp) == 1 and not isinstance(tmp, str):
+                #                 tmp = tmp[0]
                             
-                            #if tmp is a list, make sure to use copy() if tmp is a list
-                            if isinstance(tmp, list):
-                                tmp = eq[-1]
-                                eq.pop(-1)
-                                eq.append(["%or?one", tmp.copy()])
-                            else:
-                                tmp = eq[-1]
-                                eq.pop(-1)
-                                eq.append(["%or?one", tmp])
+                #             #if tmp is a list, make sure to use copy() if tmp is a list
+                #             if isinstance(tmp, list):
+                #                 tmp = eq[-1]
+                #                 eq.pop(-1)
+                #                 eq.append(["%or?one", tmp.copy()])
+                #             else:
+                #                 tmp = eq[-1]
+                #                 eq.pop(-1)
+                #                 eq.append(["%or?one", tmp])
                             
-                            prec.insert(0, 5)
-                            stack.insert(0, ["expression", tokens, [-1, -1]])         
-                            continue
+                #             prec.insert(0, 5)
+                #             stack.insert(0, ["expression", tokens, [-1, -1]])         
+                #             continue
 
-                        # if the precedence level is the same, simply append
-                        else:
-                            if cur != "":
-                                eq[-1].append(cur)
+                #         # if the precedence level is the same, simply append
+                #         else:
+                #             if cur != "":
+                #                 eq[-1].append(cur)
 
 
-                        stack.insert(0, ["eq_class", tokens[1:], [-1, -1]])         
-                        continue
-                """
+                #         stack.insert(0, ["eq_class", tokens[1:], [-1, -1]])         
+                #         continue
+                # """
                 
                 if rule[0] == 4 and len(tokens) > 0 and tokens[0] == "through":
                     if cur != "":

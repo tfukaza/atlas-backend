@@ -1,0 +1,517 @@
+{
+    "master": [
+        {
+            "type": "REQ",
+            "name": "prep_1",
+            "course": "Computer Science 1, 31, 32, 33, 35L"
+        },
+        {
+            "type": "REQ",
+            "name": "prep_2",
+            "course": "Mathematics 31A, 31B, 32A, 32B, 33A, 33B, 61"
+        },
+        {
+            "type": "REQ",
+            "name": "prep_3",
+            "course": "Physics 1A, 1B, 1C, and 4AL or 4BL"
+        },
+        {
+            "type": "REQ",
+            "name": "major_1",
+            "course": "Computer Science 111, 118, 131, M151B, M152A, 180, 181"
+        },
+        {
+            "type": "REQ",
+            "name": "major_2",
+            "course": "['$or?one', 'C&EE 110', 'EC+ENGR 131A', 'MATH 170A', 'STATS 100A']"
+        },
+        {
+            "type": "OPT",
+            "name": "major_5",
+            "selections": [
+                "BIOENGR",
+                "CH+ENGR",
+                "C&EE",
+                "EC+ENGR",
+                "MAT+SCI",
+                "MECH&AE",
+                "COM+GEN",
+                "COM+GEN",
+                "ENGR+MATH",
+                "ENGR+SCI",
+                "NANO",
+                "PREMED",
+                "TECH+MGMT",
+                "URBN+PL"
+            ],
+            "options": [
+                {
+                    "option": "BIOENGR",
+                    "content": [
+                        {
+                            "type": "REQ",
+                            "name": "major_5_0",
+                            "course": "BIOENGR 100 through CM187, CHEM 20B, LIFESCI 7A",
+                            "rules": [
+                                {
+                                    "RULE": "NOT_USED_FOR_OTHER",
+                                    "course": "CHEM 20B, LIFESCI 7A"
+                                },
+                                {
+                                    "RULE": "SUBSET_RESTRICTION",
+                                    "course": "CHEM 20B, LIFESCI 7A"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "option": "CH+ENGR",
+                    "content": [
+                        {
+                            "type": "REQ",
+                            "name": "major_5_0",
+                            "course": "CH+ENGR 100 through 199, CHEM 20B",
+                            "rules": [
+                                {
+                                    "RULE": "NOT_USED_FOR_OTHER",
+                                    "course": "CHEM 20B"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "option": "C&EE",
+                    "content": [
+                        {
+                            "type": "REQ",
+                            "name": "major_5_0",
+                            "course": "C&EE 102 through 199, CHEM 20B",
+                            "rules": [
+                                {
+                                    "RULE": "NOT_USED_FOR_OTHER",
+                                    "course": "CHEM 20B"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "option": "EC+ENGR",
+                    "content": [
+                        {
+                            "type": "REQ",
+                            "name": "major_5_0",
+                            "course": "EC+ENGR 3, 10, 100 through 199 except CM182"
+                        }
+                    ]
+                },
+                {
+                    "option": "MAT+SCI",
+                    "content": [
+                        {
+                            "type": "REQ",
+                            "name": "major_5_0",
+                            "course": "MAT+SCI 104 through CM180, CHEM 20B",
+                            "rules": [
+                                {
+                                    "RULE": "NOT_USED_FOR_OTHER",
+                                    "course": "CHEM 20B"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "option": "MECH&AE",
+                    "content": [
+                        {
+                            "type": "REQ",
+                            "name": "major_5_0",
+                            "course": "MECH&AE 101 through C187L, CHEM 20B",
+                            "rules": [
+                                {
+                                    "RULE": "NOT_USED_FOR_OTHER",
+                                    "course": "CHEM 20B"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "option": "COM+GEN",
+                    "content": [
+                        {
+                            "type": "REQ",
+                            "name": "major_5_0",
+                            "course": "CHEM 20A, EE+BIOL 135, HUM+GEN C144, LIFESCI 7A, LIFESCI 7B, LIFESCI 7C, LIFESCI 107, MCD+BIO 144, MCD+BIO 172, PHYSCI 125,  BIOMATH M203, BIOMATH M211, BIOSTAT M272, BIOSTAT M278, EE+BIOL M231, HUM+GEN 236A, HUM+GEN 236B, STATS M254",
+                            "rules": [
+                                {
+                                    "RULE": "NOT_USED_FOR_OTHER",
+                                    "course": "CHEM 20B"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "option": "COM+GEN",
+                    "content": [
+                        {
+                            "type": "REQ",
+                            "name": "major_5_0",
+                            "course": "CH+ENGR 102A, CH+ENGR CM127, C&EE 151, C&EE 153, C&EE C159, EC+ENGR M185, ENVIRON M153, ENVIRON 157, ENVIRON 159, MECH&AE 105A, MECH&AE 133A, MECH&AE 135, MECH&AE 136, MECH&AE C137, MECH&AE 150C, CH+ENGR 223, MAT+SCI 252, MAT+SCI 298"
+                        }
+                    ]
+                },
+                {
+                    "option": "ENGR+MATH",
+                    "content": [
+                        {
+                            "type": "REQ",
+                            "name": "major_5_0",
+                            "course": "C&EE 103, C&EE 110, COM+SCI 112, COM+SCI 170A, COM+SCI 180, COM+SCI 181, EC+ENGR 102, EC+ENGR 133A, EC+ENGR 131A, MECH&AE 181A, MECH&AE 182B, MECH&AE 182C, MATH 61, MATH 110A, MATH 115A, MATH 131A, MATH 132, MATH 151A, MATH 164, MATH 167, MECH&AE 181A, MECH&AE 182B, MECH&AE 182C"
+                        }
+                    ]
+                },
+                {
+                    "option": "ENGR+SCI",
+                    "content": [
+                        {
+                            "type": "REQ",
+                            "name": "major_5_0",
+                            "course": "BIOENGR 100, BIOENGR C101, CH+ENGR 100, CH+ENGR 102A, C&EE 101, C&EE 103, C&EE 108, COM+SCI 31 or MECH&AE M20 or C&EE M20, COM+SCI 32, EC+ENGR 10, EC+ENGR 100,  EC+ENGR 101A, ENGR M101 or MAT+SCI M105, EC+ENGR 102,  EC+ENGR 133A, MAT+SCI 104, MECH&AE 101, MECH&AE 102, MECH&AE 103, MECH&AE 105A"
+                        }
+                    ]
+                },
+                {
+                    "option": "NANO",
+                    "content": [
+                        {
+                            "type": "GROUP",
+                            "name": "major_5_0"
+                        }
+                    ]
+                },
+                {
+                    "option": "PREMED",
+                    "content": [
+                        {
+                            "type": "REQ",
+                            "name": "major_5_0",
+                            "course": "CHEM 30BL, CHEM 153A, LIFESCI 7B, LIFESCI 7C, LIFESCI 107, PHYSICS 4BL, BIOSTAT 100A or STATS 100A"
+                        }
+                    ]
+                },
+                {
+                    "option": "TECH+MGMT",
+                    "content": [
+                        {
+                            "type": "REQ",
+                            "name": "major_5_0",
+                            "course": "C&EE 170, ENGR 110, ENGR 111, ENGR 112, ENGR 113, ENGR 160, ENGR 163, ENGR 180, MGMT 108, MGMT 160, MGMT 161, MGMT 162, MGMT 180"
+                        }
+                    ]
+                },
+                {
+                    "option": "URBN+PL",
+                    "content": [
+                        {
+                            "type": "REQ",
+                            "name": "major_5_0",
+                            "course": "C&EE 180, C&EE 181, URBN+PL M120 or PUB+AFF M109, URBN+PL 121, URBN+PL 130, URBN+PL CM137, URBN+PL 141, URBN+PL M150, URBN+PL CM151 or PUB+AFF M153"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "OPT",
+            "name": "major_6",
+            "selections": [
+                "1",
+                "2",
+                "3",
+                "4"
+            ],
+            "options": [
+                {
+                    "option": "1",
+                    "content": [
+                        {
+                            "type": "REQ",
+                            "name": "major_6_0",
+                            "course": "Computer Science 111 through CM187, COM+SCI 199"
+                        }
+                    ]
+                },
+                {
+                    "option": "2",
+                    "content": [
+                        {
+                            "type": "REQ",
+                            "name": "major_6_0",
+                            "course": "$add_to?major-5"
+                        }
+                    ]
+                },
+                {
+                    "option": "3",
+                    "content": [
+                        {
+                            "type": "OPT",
+                            "name": "major_6_0",
+                            "selections": [
+                                "STATS",
+                                "ASTR",
+                                "A&O+SCI",
+                                "BIOL+CH",
+                                "CH+ENGR",
+                                "CHEM",
+                                "C&EE",
+                                "EPS+SCI",
+                                "ECON",
+                                "EC+ENGR",
+                                "GEOG",
+                                "LING",
+                                "MGMT",
+                                "MAT+SCI",
+                                "MATH",
+                                "MECH&AE",
+                                "MIMG",
+                                "MCD+BIO",
+                                "PHYSICS",
+                                "STATS"
+                            ],
+                            "options": [
+                                {
+                                    "option": "STATS",
+                                    "content": [
+                                        {
+                                            "type": "REQ",
+                                            "name": "major_6_0_0",
+                                            "course": "STATS upper-div except 112 except C116"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "option": "ASTR",
+                                    "content": [
+                                        {
+                                            "type": "REQ",
+                                            "name": "major_6_0_0",
+                                            "course": "ASTR upper-div"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "option": "A&O+SCI",
+                                    "content": [
+                                        {
+                                            "type": "REQ",
+                                            "name": "major_6_0_0",
+                                            "course": "A&O+SCI upper-div"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "option": "BIOL+CH",
+                                    "content": [
+                                        {
+                                            "type": "REQ",
+                                            "name": "major_6_0_0",
+                                            "course": "BIOL+CH upper-div"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "option": "CH+ENGR",
+                                    "content": [
+                                        {
+                                            "type": "REQ",
+                                            "name": "major_6_0_0",
+                                            "course": "CH+ENGR upper-div"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "option": "CHEM",
+                                    "content": [
+                                        {
+                                            "type": "REQ",
+                                            "name": "major_6_0_0",
+                                            "course": "CHEM upper-div"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "option": "C&EE",
+                                    "content": [
+                                        {
+                                            "type": "REQ",
+                                            "name": "major_6_0_0",
+                                            "course": "C&EE upper-div"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "option": "EPS+SCI",
+                                    "content": [
+                                        {
+                                            "type": "REQ",
+                                            "name": "major_6_0_0",
+                                            "course": "EPS+SCI upper-div"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "option": "ECON",
+                                    "content": [
+                                        {
+                                            "type": "REQ",
+                                            "name": "major_6_0_0",
+                                            "course": "ECON upper-div"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "option": "EC+ENGR",
+                                    "content": [
+                                        {
+                                            "type": "REQ",
+                                            "name": "major_6_0_0",
+                                            "course": "EC+ENGR upper-div"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "option": "GEOG",
+                                    "content": [
+                                        {
+                                            "type": "REQ",
+                                            "name": "major_6_0_0",
+                                            "course": "GEOG 167, 168, 169, 166, 170, M171, 172, and 173"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "option": "LING",
+                                    "content": [
+                                        {
+                                            "type": "REQ",
+                                            "name": "major_6_0_0",
+                                            "course": "LING upper-div"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "option": "MGMT",
+                                    "content": [
+                                        {
+                                            "type": "REQ",
+                                            "name": "major_6_0_0",
+                                            "course": "MGMT upper-div"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "option": "MAT+SCI",
+                                    "content": [
+                                        {
+                                            "type": "REQ",
+                                            "name": "major_6_0_0",
+                                            "course": "MAT+SCI upper-div"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "option": "MATH",
+                                    "content": [
+                                        {
+                                            "type": "REQ",
+                                            "name": "major_6_0_0",
+                                            "course": "MATH upper-div except 182",
+                                            "rules": [
+                                                {
+                                                    "RULE": "A_NOT_APPROVED_IF_B",
+                                                    "A": "MATH 116",
+                                                    "B": "COM+SCI 183"
+                                                },
+                                                {
+                                                    "RULE": "A_NOT_APPROVED_IF_B",
+                                                    "A": "MATH 156",
+                                                    "B": "COM+SCI M146"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "option": "MECH&AE",
+                                    "content": [
+                                        {
+                                            "type": "REQ",
+                                            "name": "major_6_0_0",
+                                            "course": "MECH&AE upper-div"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "option": "MIMG",
+                                    "content": [
+                                        {
+                                            "type": "REQ",
+                                            "name": "major_6_0_0",
+                                            "course": "MIMG upper-div"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "option": "MCD+BIO",
+                                    "content": [
+                                        {
+                                            "type": "REQ",
+                                            "name": "major_6_0_0",
+                                            "course": "MCD+BIO upper-div"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "option": "PHYSICS",
+                                    "content": [
+                                        {
+                                            "type": "REQ",
+                                            "name": "major_6_0_0",
+                                            "course": "PHYSICS upper-div"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "option": "STATS",
+                                    "content": [
+                                        {
+                                            "type": "REQ",
+                                            "name": "major_6_0_0",
+                                            "course": "STATS upper-div except 112 except C116"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "option": "4",
+                    "content": [
+                        {
+                            "type": "REQ",
+                            "name": "major_6_0",
+                            "course": "CHEM 20A, 20B, 30A, LIFESCI 3 or 7A"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -109,7 +109,7 @@ def parse():
 
     parser.build_mapping()
 
-    with open("majors/comsci.yml","r") as file:
+    with open("req.yml","r") as file:
 
         #req = file.readlines()
         req = yaml.safe_load(file)
@@ -120,70 +120,70 @@ def parse():
         #rec_print(result[0])
         #grp_print(result[1])
 
-        with open("majors/comsci.js","w") as output:
-            parse_write(output, result)
+        #with open("majors/comsci.js","w") as output:
+        #    parse_write(output, result)
         
-        with open("majors/req.json","w") as output:
+        with open("req.json","w") as output:
             parse_write_json(output, result)
 
-        with open("majors/desc.json","w") as output:
-            l = parse_req_yml_json(req["master"], "")
-            m = {}
-            m["master"] = l  
-            output.write(json.dumps(m))
+        with open("desc.json","w") as output:
+            list_of_req = parse_req_yml_json(req["master"], "")
+            map_of_req = {}
+            map_of_req["master"] = list_of_req  
+            output.write(json.dumps(map_of_req, indent=4))
 
         
-        with open("majors/comsci.html","w") as output:
-            output.write(""" 
-                <!DOCTYPE html>
-                <html>
-                <body>
+        # with open("req.html","w") as output:
+        #     output.write(""" 
+        #         <!DOCTYPE html>
+        #         <html>
+        #         <body>
 
-                <form>
-                Courses: <textarea id="list" type="text" name="courses"></textarea>
-                <button type="button" onclick="chkProgress()">Submit</button>
-                </form>            
-            """)
-            output.write(result[4])
-            output.write(""" 
-                </body>
-                </html>
-                <style>
-                    div{
-                        background-color: aqua;
-                        border: red 1px solid;
-                        padding:10px;
-                    }
-                    .done{
-                        background-color: green;
-                    }
-                    .hide{
-                        display:none;
-                    }
-                </style>
-                <script src = "../scrape.js"></script>
-                <script src = "../atlasAudit.js"></script>
-                <script src = "comsci.js"></script>
-                <script src = "../checkProgress.js"></script>
-            """)
-            output.write("""
-                <script>
-                function select_opt(element, value){
+        #         <form>
+        #         Courses: <textarea id="list" type="text" name="courses"></textarea>
+        #         <button type="button" onclick="chkProgress()">Submit</button>
+        #         </form>            
+        #     """)
+        #     output.write(result[4])
+        #     output.write(""" 
+        #         </body>
+        #         </html>
+        #         <style>
+        #             div{
+        #                 background-color: aqua;
+        #                 border: red 1px solid;
+        #                 padding:10px;
+        #             }
+        #             .done{
+        #                 background-color: green;
+        #             }
+        #             .hide{
+        #                 display:none;
+        #             }
+        #         </style>
+        #         <script src = "../scrape.js"></script>
+        #         <script src = "../atlasAudit.js"></script>
+        #         <script src = "comsci.js"></script>
+        #         <script src = "../checkProgress.js"></script>
+        #     """)
+        #     output.write("""
+        #         <script>
+        #         function select_opt(element, value){
                 
-                    let e = element.parentNode.firstChild;
-                    do{
-                        if (e.classList.contains(value)){
-                            e.classList.remove("hide");
-                        }
-                        else if (!e.classList.contains("sel")){
-                            e.classList.add("hide");
-                        }
-                    }
-                    while(e = e.nextSibling)
+        #             let e = element.parentNode.firstChild;
+        #             do{
+        #                 if (e.classList.contains(value)){
+        #                     e.classList.remove("hide");
+        #                 }
+        #                 else if (!e.classList.contains("sel")){
+        #                     e.classList.add("hide");
+        #                 }
+        #             }
+        #             while(e = e.nextSibling)
 
-                }
-                </script>
-                """)
+        #         }
+        #         </script>
+        #         """)
 
 
 
@@ -202,13 +202,9 @@ def parse_req_yml_json(req, req_name):
             tmp_map["type"] = "GROUP"
             name = item["GROUP"]
             
-            if name[0:5] == "$anon":
-                name = name.split("?")
-                if len(name) > 1:
-                    name = req_name + "_" + name[1]
-                else:
-                    name = req_name
-                
+            if name == "_":
+                name = req_name + "_" + str(l)
+                l+=1
             else:
                 name = name
 
@@ -223,13 +219,9 @@ def parse_req_yml_json(req, req_name):
             tmp_map["type"] = "REQ"
             name = item["REQ"]
             
-            if name[0:5] == "$anon":
-                name = name.split("?")
-                if len(name) > 1:
-                    name = req_name + "_" + name[1]
-                else:
-                    name = req_name
-                
+            if name == "_":
+                name = req_name + "_" + str(l)
+                l+=1
             else:
                 name = name
 
@@ -253,8 +245,8 @@ def parse_req_yml_json(req, req_name):
             if name == "_":
                 name = req_name + "_" + str(l)
                 l+=1
-            elif req_name != "":
-                name = req_name + "_" + name
+            else:
+                name = name
 
             tmp_map["name"] = name
             
@@ -272,7 +264,7 @@ def parse_req_yml_json(req, req_name):
                 opt_map = {}
 
                 opt_map["option"] = o["option"]
-                opt_map["content"] = parse_req_yml_json(o["content"], o["option"])
+                opt_map["content"] = parse_req_yml_json(o["content"], name)
 
                 option_list.append(opt_map)
             
@@ -714,13 +706,9 @@ def parse_req_yml(req, req_name):
             
             name = item["GROUP"]
             
-            if name[0:5] == "$anon":
-                name = name.split("?")
-                if len(name) > 1:
-                    name = req_name + "." + name[1]
-                else:
-                    name = req_name
-                
+            if name == "_":
+                name = req_name + "_" + str(l)
+                l+=1
             else:
                 name = name
 
@@ -748,13 +736,10 @@ def parse_req_yml(req, req_name):
         elif "REQ" in item:
             
             name = item["REQ"]
-            if name[0:5] == "$anon":
-                name = name.split("?")
-                if len(name) > 1:
-                    name = req_name + "." + name[1]
-                else:
-                    name = req_name
-                
+
+            if name == "_":
+                name = req_name + "_" + str(l)
+                l+=1
             else:
                 name = name
 
@@ -843,13 +828,9 @@ def parse_req_yml(req, req_name):
             
             name = item["OPT"]
 
-            if name[0:5] == "$anon":
-                name = name.split("?")
-                if len(name) > 1:
-                    name = req_name + "." + name[1]
-                else:
-                    name = req_name
-                
+            if name == "_":
+                name = req_name + "_" + str(l)
+                l+=1
             else:
                 name = name
 
@@ -1182,20 +1163,6 @@ def parse_write_rec_json(output, result, depth):
 
 
     output.write("]}")
-
-
-
-
-
-
-
-       
-        
-        #a[a.length-1].chk = check_req.bind(a[a.length-1]);
-        #a[a.length-1].upd = update_leaf_1.bind(a[a.length-1], 6, -1);
-
-#def pase_write_fast():
-       
 
 
 def trim_nonalpha(s):
