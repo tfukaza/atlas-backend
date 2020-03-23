@@ -81,7 +81,8 @@
 		]
 	}
 	],
-	"directors":[]}
+	"directors":[	],
+	"rules":[]}
 ,
 	"CH+ENGR":
 	{
@@ -98,7 +99,8 @@
 			{"name":"NOT_USED_FOR_OTHER", "course":[["%and", "CHEM 20B"]]}		]
 	}
 	],
-	"directors":[]}
+	"directors":[	],
+	"rules":[]}
 ,
 	"C&EE":
 	{
@@ -115,7 +117,8 @@
 			{"name":"NOT_USED_FOR_OTHER", "course":[["%and", "CHEM 20B"]]}		]
 	}
 	],
-	"directors":[]}
+	"directors":[	],
+	"rules":[]}
 ,
 	"EC+ENGR":
 	{
@@ -132,7 +135,8 @@
 		]
 	}
 	],
-	"directors":[]}
+	"directors":[	],
+	"rules":[]}
 ,
 	"MAT+SCI":
 	{
@@ -149,7 +153,8 @@
 			{"name":"NOT_USED_FOR_OTHER", "course":[["%and", "CHEM 20B"]]}		]
 	}
 	],
-	"directors":[]}
+	"directors":[	],
+	"rules":[]}
 ,
 	"MECH&AE":
 	{
@@ -166,7 +171,8 @@
 			{"name":"NOT_USED_FOR_OTHER", "course":[["%and", "CHEM 20B"]]}		]
 	}
 	],
-	"directors":[]}
+	"directors":[	],
+	"rules":[]}
 ,
 	"COM+GEN":
 	{
@@ -183,7 +189,8 @@
 			{"name":"NOT_USED_FOR_OTHER", "course":[["%and", "CHEM 20B"]]}		]
 	}
 	],
-	"directors":[]}
+	"directors":[	],
+	"rules":[]}
 ,
 	"COM+GEN":
 	{
@@ -200,7 +207,8 @@
 		]
 	}
 	],
-	"directors":[]}
+	"directors":[	],
+	"rules":[]}
 ,
 	"ENGR+MATH":
 	{
@@ -217,7 +225,8 @@
 		]
 	}
 	],
-	"directors":[]}
+	"directors":[	],
+	"rules":[]}
 ,
 	"ENGR+SCI":
 	{
@@ -234,7 +243,8 @@
 		]
 	}
 	],
-	"directors":[]}
+	"directors":[	],
+	"rules":[]}
 ,
 	"NANO":
 	{
@@ -269,7 +279,8 @@
 		"agent":["major_5_0_0", "major_5_0_1"],
 	"upd":"FINISH_GRP",
 	"upd_param":["3", "12", "2"]}
-]}
+	],
+	"rules":[]}
 ,
 	"PREMED":
 	{
@@ -286,7 +297,8 @@
 		]
 	}
 	],
-	"directors":[]}
+	"directors":[	],
+	"rules":[]}
 ,
 	"TECH+MGMT":
 	{
@@ -303,7 +315,8 @@
 		]
 	}
 	],
-	"directors":[]}
+	"directors":[	],
+	"rules":[]}
 ,
 	"URBN+PL":
 	{
@@ -320,7 +333,8 @@
 		]
 	}
 	],
-	"directors":[]}
+	"directors":[	],
+	"rules":[]}
 }},
 {
 "type":"OPT",
@@ -341,7 +355,8 @@
 		]
 	}
 	],
-	"directors":[]}
+	"directors":[	],
+	"rules":[]}
 ,
 	"2":
 	{
@@ -358,7 +373,8 @@
 		]
 	}
 	],
-	"directors":[]}
+	"directors":[	],
+	"rules":[]}
 ,
 	"3":
 	{
@@ -382,7 +398,8 @@
 			]
 		}
 		],
-		"directors":[]}
+		"directors":[		],
+		"rules":[]}
 ,
 		"ASTR":
 		{
@@ -399,7 +416,8 @@
 			]
 		}
 		],
-		"directors":[]}
+		"directors":[		],
+		"rules":[]}
 ,
 		"A&O+SCI":
 		{
@@ -416,7 +434,8 @@
 			]
 		}
 		],
-		"directors":[]}
+		"directors":[		],
+		"rules":[]}
 ,
 		"BIOL+CH":
 		{
@@ -433,7 +452,8 @@
 			]
 		}
 		],
-		"directors":[]}
+		"directors":[		],
+		"rules":[]}
 ,
 		"CH+ENGR":
 		{
@@ -450,7 +470,8 @@
 			]
 		}
 		],
-		"directors":[]}
+		"directors":[		],
+		"rules":[]}
 ,
 		"CHEM":
 		{
@@ -467,7 +488,8 @@
 			]
 		}
 		],
-		"directors":[]}
+		"directors":[		],
+		"rules":[]}
 ,
 		"C&EE":
 		{
@@ -484,7 +506,8 @@
 			]
 		}
 		],
-		"directors":[]}
+		"directors":[		],
+		"rules":[]}
 ,
 		"EPS+SCI":
 		{
@@ -501,7 +524,8 @@
 			]
 		}
 		],
-		"directors":[]}
+		"directors":[		],
+		"rules":[]}
 ,
 		"ECON":
 		{
@@ -518,7 +542,8 @@
 			]
 		}
 		],
-		"directors":[]}
+		"directors":[		],
+		"rules":[]}
 ,
 		"EC+ENGR":
 		{
@@ -535,7 +560,8 @@
 			]
 		}
 		],
-		"directors":[]}
+		"directors":[		],
+		"rules":[]}
 ,
 		"GEOG":
 		{
@@ -552,7 +578,8 @@
 			]
 		}
 		],
-		"directors":[]}
+		"directors":[		],
+		"rules":[]}
 ,
 		"LING":
 		{
@@ -569,7 +596,8 @@
 			]
 		}
 		],
-		"directors":[]}
+		"directors":[		],
+		"rules":[]}
 ,
 		"MGMT":
 		{
@@ -586,7 +614,8 @@
 			]
 		}
 		],
-		"directors":[]}
+		"directors":[		],
+		"rules":[]}
 ,
 		"MAT+SCI":
 		{
@@ -603,7 +632,8 @@
 			]
 		}
 		],
-		"directors":[]}
+		"directors":[		],
+		"rules":[]}
 ,
 		"MATH":
 		{
@@ -622,7 +652,8 @@
 			]
 		}
 		],
-		"directors":[]}
+		"directors":[		],
+		"rules":[]}
 ,
 		"MECH&AE":
 		{
@@ -639,7 +670,8 @@
 			]
 		}
 		],
-		"directors":[]}
+		"directors":[		],
+		"rules":[]}
 ,
 		"MIMG":
 		{
@@ -656,7 +688,8 @@
 			]
 		}
 		],
-		"directors":[]}
+		"directors":[		],
+		"rules":[]}
 ,
 		"MCD+BIO":
 		{
@@ -673,7 +706,8 @@
 			]
 		}
 		],
-		"directors":[]}
+		"directors":[		],
+		"rules":[]}
 ,
 		"PHYSICS":
 		{
@@ -690,7 +724,8 @@
 			]
 		}
 		],
-		"directors":[]}
+		"directors":[		],
+		"rules":[]}
 ,
 		"STATS":
 		{
@@ -707,9 +742,11 @@
 			]
 		}
 		],
-		"directors":[]}
+		"directors":[		],
+		"rules":[]}
 }}	],
-	"directors":[]}
+	"directors":[	],
+	"rules":[]}
 ,
 	"4":
 	{
@@ -726,6 +763,46 @@
 		]
 	}
 	],
-	"directors":[]}
+	"directors":[	],
+	"rules":[]}
 }}],
-"directors":[]}
+"directors":[],
+"rules":[
+		{"name":"SUBSET_RESTRICTION", "course":[["C&EE 110", "EC+ENGR 131A", "ENGR 116", "MATH 170A", "MATH 170E", "STATS 100A"]]}
+,
+
+		{"name":"SUBSET_RESTRICTION", "course":[["%and", "C&EE 103", "CH+ENGR 109", "EC+ENGR 133A", "MATH 151A"]]}
+,
+
+		{"name":"SUBSET_RESTRICTION", "course":[["%and", "C&EE 108", "MECH&AE 101"]]}
+,
+
+		{"name":"SUBSET_RESTRICTION", "course":[["%and", "C&EE 91", "MECH&AE 101"]]}
+,
+
+		{"name":"SUBSET_RESTRICTION", "course":[["%and", "C&EE 102", "MECH&AE 102"]]}
+,
+
+		{"name":"SUBSET_RESTRICTION", "course":[["%and", "CH+ENGR 102A", "MECH&AE 105A"]]}
+,
+
+		{"name":"SUBSET_RESTRICTION", "course":[["%and", "CH+ENGR 101B", "MECH&AE 105D"]]}
+,
+
+		{"name":"SUBSET_RESTRICTION", "course":[["%and", "EC+ENGR 102", "MECH&AE 107"]]}
+,
+
+		{"name":"SUBSET_RESTRICTION", "course":[["%and", "CH+ENGR 107", "EC+ENGR 141", "MECH&AE 171A"]]}
+,
+
+		{"name":"SUBSET_RESTRICTION", "course":[["%and", "EC+ENGR 10", "EC+ENGR 100"]]}
+,
+
+		{"name":"SUBSET_RESTRICTION", "course":[["%and", "EC+ENGR 100", "EC+ENGR 110"]]}
+,
+
+		{"name":"SUBSET_RESTRICTION", "course":[["%and", "MATH 33B", "MECH&AE 82"]]}
+,
+
+		{"name":"SUBSET_RESTRICTION", "course":[["%and", "ENGR 163", "MGMT 163"]]}
+]}

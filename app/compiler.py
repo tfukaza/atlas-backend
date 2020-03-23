@@ -120,8 +120,8 @@ def parse():
         #rec_print(result[0])
         #grp_print(result[1])
 
-        #with open("majors/comsci.js","w") as output:
-        #    parse_write(output, result)
+        with open("req.js","w") as output:
+            parse_write(output, result)
         
         with open("req.json","w") as output:
             parse_write_json(output, result)
@@ -792,18 +792,16 @@ def parse_req_yml(req, req_name):
                 #check each rule
                 for rule in item["rules"]:
 
+                    name = rule["RULE"]
+                    print("RULE" + name)
+
+                    agent_buffer[-1].rules.append(RuleAgent(name))
+                    html+="<div class=\"rule " + name + "\">" 
+                    html+="<p>" + name + "</p>" 
                     #check each key/value pair
                     for param in rule: 
 
-                        name = rule["RULE"]
-                        print("RULE" + name)
-
-                        if param == "RULE":
-                            agent_buffer[-1].rules.append(RuleAgent(name))
-                            html+="<div class=\"rule " + name + "\">" 
-                            html+="<p>" + name + "</p>" 
-                        
-                        elif param == "course" or param == "A" or param == "B":
+                        if param == "course" or param == "A" or param == "B":
                             #Rules almost always refer to course. Find them out. 
                             #Obtain the value of the keys
                             line = rule[param]
@@ -811,7 +809,7 @@ def parse_req_yml(req, req_name):
                             if isinstance(line, list):
                                 #convert it to an object 
                                 req_list = line
-                            elif line[0] == "$":
+                            elif line[0] == "%":
                                 req_list = [line]
                             # if the list is written in plaintext
                             else:
@@ -889,6 +887,7 @@ def parse_req_yml(req, req_name):
             #state="rule-global"
             #l = l + 1
             #check each key/value pair
+            #rule_buffer[-1].ref = []
             for param in item: 
                 
                 if param == "course" or param == "A" or param == "B":
@@ -900,10 +899,12 @@ def parse_req_yml(req, req_name):
                     if isinstance(line, list):
                         #convert it to an object 
                         req_list = line
-                    elif line[0] == "$":
+                    elif line[0] == "%":
                         req_list = [line]
+                    else:
+                        req_list = parser.parseReq(line)
 
-                    rule_buffer[-1].ref = req_list
+                    rule_buffer[-1].ref.append(req_list)
     
             html+="</div>" 
         
@@ -1137,9 +1138,13 @@ def parse_write_rec_json(output, result, depth):
     output.write(depth + "\"directors\":[")
 
     #output the groups
-    for direc in result[1]:
+    for i, direc in enumerate(result[1]):
 
-        txt =  depth + "{\n"
+        txt = ""
+        if i > 0:
+            txt = ",\n"
+
+        txt +=  depth + "{\n"
         txt += depth + "\t\"type\":\"GROUP\",\n"           # record that this is REQ type
         txt += depth + "\t\"name\":\"" + direc.name + "\",\n"
         txt += depth + "\t\"agent\":" + str(direc.ref).replace("'", "\"") + ",\n"
@@ -1158,9 +1163,21 @@ def parse_write_rec_json(output, result, depth):
         txt+="}\n"
 
         output.write(txt)
-     
-    # TODO: RULES
+    
+    output.write(depth + "],\n")
+    output.write(depth + "\"rules\":[")
 
+    for i, rule in enumerate(result[2]):
+    
+        txt = ""
+        if i > 0:
+            txt = ",\n"
+
+        txt += "\n" + depth + "\t\t{\"name\":\"" + rule.name + "\", "
+        txt += "\"course\":" + str(rule.ref).replace("'", "\"")
+        txt += "}\n" 
+
+        output.write(txt)
 
     output.write("]}")
 
